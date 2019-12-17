@@ -148,7 +148,7 @@ class BinarySearchTree {
 //If the tree does not exist it will return 0
 //Otherwise, it recursively call itself and add's to the value of each node in every branch.
 //It goes down both the left and right branches.
-//Runtime is linear O(n)
+//Runtime is linear O(n), the bigger the tree, the longer it will take
 //If we passed our numberBST the result will be 37
 function tree(t){
     if(!t){
@@ -158,16 +158,21 @@ function tree(t){
 }
 
 //#5 Height of a BST
-//Runtime is linear O(n)
-function height(node){
-    if(!node) return 0;
-    let leftHeight = height(node.left);
-    let rightHeight = height(node.right);
-
-    if(height(leftHeight) > height(rightHeight)) return height(leftHeight) + 1;
-    else return height(rightHeight) + 1;
-   
+//Runtime is linear O(n) because we go through both sides of the tree
+function treeHeight(t){
+    if(!t) 
+        return 0;
+    else {
+        //computing the depth of each subtree
+        let lDepth = treeHeight(t.left);
+        let rDepth = treeHeight(t.right);
+        //use the larger one
+        if(lDepth > rDepth) return (lDepth+1);
+        else return (rDepth+1);
+    }  
 }
+
+//#6 is it BST?
 
 
 function main() {
@@ -180,12 +185,11 @@ function main() {
     numberBST.insert(2,2);
     numberBST.insert(5,5);
     numberBST.insert(7,7);
-    // numberBST.insert(8,8);
     // console.log(numberBST);
     // console.log(tree(numberBST)); //result will be 37
     // numberBST.remove(3,3);
     // console.log(numberBST);
-    console.log(height(numberBST));
+    console.log(treeHeight(numberBST)); //height will be 2
 
     let stringBST = new BinarySearchTree();
     stringBST.insert('E','E');

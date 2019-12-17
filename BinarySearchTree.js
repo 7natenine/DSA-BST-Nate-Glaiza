@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 class BinarySearchTree {
     constructor(key = null, value = null, parent = null) {
         this.key = key;
@@ -160,20 +161,130 @@ function tree(t){
 //#5 Height of a BST
 //Runtime is linear O(n) because we go through both sides of the tree
 function treeHeight(t){
+    let left = 0;
+    let right = 0;
+
     if(!t) 
         return 0;
     else {
         //computing the depth of each subtree
-        let lDepth = treeHeight(t.left);
-        let rDepth = treeHeight(t.right);
+        left = treeHeight(t.left);
+        right = treeHeight(t.right);
         //use the larger one
-        if(lDepth > rDepth) return (lDepth+1);
-        else return (rDepth+1);
+        if(left > right) {
+            return left + 1;
+        }
+        else {
+            return right + 1;
+        }
     }  
 }
 
 //#6 is it BST?
+function isItBST(t) {
+    if(t.left) {
+        if(t.left.key < t.key) {
+            return isItBST(t.left);
+        } else {
+            return false;
+        }
+    }
+    
+    if(t.right) {
+        if(t.right.key < t.key) {
+            return isItBST(t.right);
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
 
+//#7 3rd largest node
+function thirdLargest(tree){
+    let arr = [];
+    const tData = (t) => {
+        if(!t) return;
+        arr.push(t.key);
+        tData(t.left);
+        tData(t.right);
+    };
+    tData(tree);
+    arr.sort();
+    return arr[arr.length-3];
+}
+
+//#8 isBalanced 
+// function isBalanced (t){
+
+//     if(t === null){
+//         return true;
+//     }
+
+//     if(heightCheck(t) === -1){
+//         return false;
+//     } 
+//     else {
+//         return isBalanced(t.left) && isBalanced(t.right);
+//     }
+
+// }
+
+// function heightCheck(t) {
+//     if(t === null){
+//         return 0;
+//     }
+//     let lh = heightCheck(t.left);
+//     let rh = heightCheck(t.right);
+//     let heightDiff = lh-rh;
+//     if(Math.abs(heightDiff) > 1){
+//         return -1;
+//     } else {
+//         return Math.max(lh, rh) + 1;
+//     }
+// }
+
+function isBalanced(t) {
+    let left = treeHeight(t.left);
+    console.log('left' + left);
+    let right = treeHeight(t.right);
+    console.log('right' + right);
+    
+    if(Math.abs(right-left) < 1){
+        console.log(true);
+        return true;
+    }
+    else if(Math.abs(right-left) >= 1){
+        console.log(false);
+        return false;
+    }
+
+}
+
+//9# Are they the same BSTs?
+//true
+// const Array1 = [3, 5, 4, 6, 1, 0, 2];
+// const Array2 =  [3, 1, 5, 2, 4, 6, 0];
+//false
+const Array3 = [3, 5, 4, 6, 1, 0, 2];
+const Array4 =  [5,7, 9, 2, 8, 4, 6, 3];
+
+function areTheSame(array1, array2) {
+    if(array1.length !== array2.length) {
+        return false;
+    }
+
+    let arr1 = array1.sort(function (a, b) {return a-b;});
+    let arr2 = array2.sort(function (a, b) {return a-b;});
+
+    for(let i = 0; i<array1.length; i++) {
+        if(arr1[i] !== arr2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+areTheSame(Array3, Array4);
 
 function main() {
     let numberBST = new BinarySearchTree();
@@ -189,7 +300,10 @@ function main() {
     // console.log(tree(numberBST)); //result will be 37
     // numberBST.remove(3,3);
     // console.log(numberBST);
-    console.log(treeHeight(numberBST)); //height will be 2
+    // console.log(treeHeight(numberBST)); //height will be 2
+    // console.log(isItBST(numberBST));
+    // console.log(thirdLargest(numberBST)); //6
+    // console.log(isBalanced(numberBST));
 
     let stringBST = new BinarySearchTree();
     stringBST.insert('E','E');
@@ -205,5 +319,22 @@ function main() {
     stringBST.insert('O','O');
     stringBST.insert('N','N');
     // console.log(stringBST);
+    // console.log(isItBST(stringBST));
 }
-main();
+// main();
+
+
+//use to check for n0.8 [3, 5, 4, 6, 1, 0, 2
+function main2() {
+    let numberBST = new BinarySearchTree();
+    numberBST.insert(3,3);
+    numberBST.insert(5,5);
+    numberBST.insert(4,4);
+    numberBST.insert(6,6);
+    numberBST.insert(1,1);
+    // numberBST.insert(8,8);
+    numberBST.insert(0,0);
+    numberBST.insert(2,2);
+    console.log(isBalanced(numberBST));
+}
+main2();

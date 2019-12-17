@@ -158,8 +158,15 @@ function tree(t){
 }
 
 //#5 Height of a BST
-function BSTHeight(){
-    
+//Runtime is linear O(n)
+function height(node){
+    if(!node) return 0;
+    let leftHeight = height(node.left);
+    let rightHeight = height(node.right);
+
+    if(height(leftHeight) > height(rightHeight)) return height(leftHeight) + 1;
+    else return height(rightHeight) + 1;
+   
 }
 
 
@@ -173,10 +180,12 @@ function main() {
     numberBST.insert(2,2);
     numberBST.insert(5,5);
     numberBST.insert(7,7);
+    // numberBST.insert(8,8);
     // console.log(numberBST);
     // console.log(tree(numberBST)); //result will be 37
-    numberBST.remove(3,3);
+    // numberBST.remove(3,3);
     // console.log(numberBST);
+    console.log(height(numberBST));
 
     let stringBST = new BinarySearchTree();
     stringBST.insert('E','E');
@@ -191,6 +200,6 @@ function main() {
     stringBST.insert('I','I');
     stringBST.insert('O','O');
     stringBST.insert('N','N');
-    console.log(stringBST);
+    // console.log(stringBST);
 }
 main();

@@ -8,7 +8,8 @@
  *                   /  \
  *                   5   9     
  *                      /
- *                     
+ *                     7
+ * 
  *  If we were to remove the root(3)
  *  Using feft-side ---> the root will be 2, because we need the get the highest value of the left side
  *  Using right-Side ---> the root will be 4, becasue we need to use the lowest value of the right side 
